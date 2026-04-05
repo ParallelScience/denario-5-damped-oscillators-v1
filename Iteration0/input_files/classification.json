@@ -1,0 +1,8 @@
+{
+  "primary_category": "physics.class-ph",
+  "secondary_categories": [
+    "physics.data-an",
+    "physics.comp-ph"
+  ],
+  "justification": "The paper focuses on the dynamics of damped harmonic oscillators, which is a fundamental topic in classical mechanics. The methodology involves statistical data analysis and computational signal processing techniques to remove noise-induced bias, making physics.data-an and physics.comp-ph appropriate secondary categories."
+}
