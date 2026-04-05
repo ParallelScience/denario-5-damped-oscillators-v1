@@ -1,0 +1,133 @@
+
+###### PROMPT BEGINS ########
+Human: 
+**Role**: Senior Scientific Lead and Peer Reviewer.
+**Objective**: Critically evaluate 10 proposed research ideas and select the single most impactful project to move into the planning phase.
+
+**Evaluation Framework**:
+To determine the "largest scientific impact," you must weigh each idea against the following four pillars:
+1. **Feasibility**: Given the constraints in the 'Data Description,' can this project actually be executed with the available variables?
+2. **Novelty**: Does the idea offer a fresh perspective, or is it a standard, derivative analysis?
+3. **Rigour**: Does the idea suggest a deep investigation into the underlying physics/logic of the data?
+4. **Utility**: Will the results provide actionable insights or significantly enhance our understanding of the system?
+5. The idea selected should be as different as possible to any previous ideas.
+
+**Task**:
+1. Review the proposed 10 research ideas along with any previous ideas.
+2. Review the 'Data Description' to ensure the ideas are physically and statistically grounded.
+3. Select the **one** idea that best balances innovation with scientific feasibility.
+4. The selected idea must contain a title and a description of it.
+
+**Operational Constraints**:
+- Do not provide a list of pros and cons.
+- Do not modify the original text of the idea.
+- Provide **only** the text of the selected idea within the required tags.
+
+Data description:
+# Damped Harmonic Oscillator Dataset
+
+## File location
+
+The dataset is a NumPy structured array saved at:
+
+    /home/node/data/damped_oscillators.npy
+
+## How to load
+
+```python
+import numpy as np
+data = np.load("/home/node/data/damped_oscillators.npy", allow_pickle=False)
+
+# Access columns by name:
+t = data['time']
+x = data['displacement']
+v = data['velocity']
+osc_ids = data['oscillator_id']
+
+# Filter to a single oscillator:
+mask = data['oscillator_id'] == 1
+osc1 = data[mask]
+```
+
+## Contents
+
+The file contains 10,000 rows (20 oscillators x 500 time steps) as a NumPy
+structured array with the following fields:
+
+| Field                | Type    | Unit     | Description                                     |
+|----------------------|---------|----------|-------------------------------------------------|
+| oscillator_id        | int32   | —        | Integer identifier (1–20)                       |
+| time                 | float64 | s        | Time from 0 to 20 seconds                       |
+| displacement         | float64 | m        | Position x(t) with Gaussian measurement noise   |
+| velocity             | float64 | m/s      | Velocity dx/dt with Gaussian measurement noise  |
+| mass_kg              | float64 | kg       | Oscillator mass (0.1–10 kg)                     |
+| spring_constant      | float64 | N/m      | Spring constant k = m * omega^2                 |
+| damping_coefficient  | float64 | kg/s     | Damping coefficient b = 2 * m * gamma           |
+| natural_frequency    | float64 | rad/s    | Angular frequency omega (0.5–5 rad/s)           |
+| damping_ratio        | float64 | —        | gamma / omega (all < 1, i.e. underdamped)       |
+| initial_amplitude    | float64 | m        | Initial amplitude A (0.5–3 m)                   |
+| initial_phase        | float64 | rad      | Initial phase phi (0–2*pi)                      |
+| kinetic_energy       | float64 | J        | 0.5 * m * v^2 (instantaneous)                   |
+| potential_energy     | float64 | J        | 0.5 * k * x^2 (instantaneous)                   |
+| total_energy         | float64 | J        | KE + PE (should decay due to damping)           |
+
+## Physics model
+
+Each oscillator follows the damped harmonic oscillator equation:
+
+    x(t) = A * exp(-gamma * t) * cos(omega * t + phi) + noise
+
+where gamma is the damping rate and omega is the natural frequency.
+All 20 oscillators are underdamped (damping_ratio < 1).
+
+## Hardware constraints
+
+- Linux container (Debian Bookworm, x86_64)
+- Maximum 4 CPU cores for parallel workloads
+- No computation should run for more than 2 minutes
+- No GPU / no CUDA — do not use CUDA-dependent libraries
+- For PyTorch: use device='cpu' only
+- Keep memory usage under 8 GB
+
+
+Proposed ideas:
+1. **Energy Dissipation Topology**: Investigate if the rate of total energy decay follows a universal scaling law across varying mass-to-damping ratios. This study seeks to identify if a single dimensionless parameter can predict the time-to-rest for all oscillators regardless of their specific physical constants.
+
+2. **Noise-Induced Phase Jitter Analysis**: Quantify how Gaussian measurement noise in displacement and velocity data obscures the underlying initial phase of the oscillation. The objective is to determine the theoretical limit of phase estimation accuracy as a function of the signal-to-noise ratio in underdamped systems.
+
+3. **Non-Linear Damping Sensitivity**: Explore whether deviations in the expected total energy decay rate correlate with specific oscillator mass ranges. This research aims to detect if hidden systemic biases exist in the data generation process that favor specific damping regimes.
+
+4. **Information Entropy of Damped Trajectories**: Apply information-theoretic measures to quantify the loss of predictability in the oscillator state over the 20-second interval. The goal is to establish a metric for "state-information decay" that characterizes the transition from deterministic motion to noise-dominated signals.
+
+5. **Frequency Domain Stability**: Examine the spectral signatures of the oscillators to determine if the natural frequency can be recovered with higher precision from velocity data versus displacement data. This research addresses the robustness of frequency estimation in the presence of time-correlated Gaussian noise.
+
+6. **Damping Ratio-Energy Flux Correlation**: Analyze the instantaneous exchange rate between kinetic and potential energy to see if the damping ratio influences the phase-lag between these two energy states. This looks for dynamical signatures that distinguish between light and heavy damping beyond simple amplitude decay.
+
+7. **Reconstruction of Initial Conditions**: Determine the feasibility of back-calculating the initial amplitude and phase from noisy late-stage oscillation data. This project investigates the "memory" of the system and how quickly the initial state becomes statistically indistinguishable from the noise floor.
+
+8. **Geometric Phase Space Analysis**: Map the trajectories in the (x, v) phase plane to identify characteristic distortions caused by the damping coefficient. The objective is to determine if the spiral convergence rate can be used as a proxy for identifying the damping coefficient without direct parameter access.
+
+9. **Signal-to-Noise Floor Mapping**: Establish a spatial map of measurement uncertainty across the 20 oscillators to determine if the Gaussian noise characteristics are independent or coupled with the oscillator's intrinsic dynamics. This research tests the assumption of additive noise stationarity across different mass and frequency regimes.
+
+10. **Parameter Sensitivity of Energy Decay**: Perform a global sensitivity analysis to rank which physical constants (mass, spring constant, or damping coefficient) contribute most to the variance in total energy over time. This aims to simplify the damped oscillator model by identifying redundant parameters in the energy dissipation equation.
+
+
+
+
+
+
+
+Respond in exactly the following format:
+
+\\begin{IDEA}
+<IDEA>
+\\end{IDEA}
+
+In <IDEA>, put the idea you have selected
+
+###### PROMPT ENDS ########
+
+\begin{IDEA}
+**Information Entropy of Damped Trajectories**: Apply information-theoretic measures to quantify the loss of predictability in the oscillator state over the 20-second interval. The goal is to establish a metric for "state-information decay" that characterizes the transition from deterministic motion to noise-dominated signals.
+\end{IDEA}
+

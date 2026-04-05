@@ -1,0 +1,18 @@
+\documentclass[]{article}
+
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{natbib}
+\usepackage{graphicx} 
+
+
+\begin{document}
+
+This paper addressed the problem of noise-induced bias in the measurement of energy decay dynamics, where measurement noise creates an artificial, non-zero energy floor that obscures the true dissipation process and corrupts the estimation of physical parameters. We developed and validated an analytical deconvolution framework to isolate and remove this bias. The method was applied to a dataset of 20 simulated damped harmonic oscillators. Our approach characterizes the noise by calculating the empirical variances of displacement and velocity signals during the late-time phase of the decay, where the physical signal is negligible. These variances are used to compute a constant energy bias term, which is then subtracted from the total measured energy to yield a corrected trajectory.
+
+The results demonstrate that this deconvolution framework is highly effective. The method successfully eliminates the artificial energy plateau observed in the raw data, producing corrected energy trajectories that follow the expected exponential decay down to zero. This correction was shown to be particularly impactful for systems with low signal-to-noise ratios, where the noise floor would otherwise dominate the late-time dynamics. To validate the framework, we performed non-linear least-squares fitting on the corrected energy curves to estimate the damping rates. The observed damping rates were in excellent agreement with the theoretical values, with a mean residual of only $0.0082 \text{ rad/s}$ and a standard deviation of $0.0197 \text{ rad/s}$ across all oscillators.
+
+From these findings, we have learned that a simple, analytical correction based on the statistical properties of late-time measurement noise is sufficient to remove a significant source of systematic error in energy decay analysis. This framework provides a robust diagnostic tool for distinguishing measurement artifacts from true physical behavior, enabling the accurate recovery of underlying dissipation parameters from noisy data. The ability to reliably correct for noise-induced energy floors strengthens the connection between experimental measurements and theoretical models of energy dissipation.
+
+\end{document}
+                

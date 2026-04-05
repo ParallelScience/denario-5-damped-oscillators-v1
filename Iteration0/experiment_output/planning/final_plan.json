@@ -1,0 +1,38 @@
+{
+    "sub_tasks": [
+        {
+            "bullet_points": [
+                "Load the structured NumPy array from the provided path using efficient memory mapping.",
+                "Iterate through each of the 20 oscillators using vectorized NumPy operations to extract time series data.",
+                "Perform local linear detrending on the late-time signal ($t > 15s$) to estimate the Gaussian noise variance ($\\sigma_x^2$ and $\\sigma_v^2$) for each oscillator.",
+                "Calculate the oscillator-specific energy bias $\\Delta E_{noise} = 0.5(k\\sigma_x^2 + m\\sigma_v^2)$ and the Signal-to-Noise Ratio (SNR) defined as $E(0) / \\Delta E_{noise}$.",
+                "Apply the bias correction $E_{corrected}(t) = \\max(0, E_{total}(t) - \\Delta E_{noise})$ to all oscillators.",
+                "Perform a non-linear least-squares fit of $E(t) = E_0 \\exp(-2\\gamma_{obs} t)$ to the corrected energy trajectories.",
+                "Save the corrected energy data and generate a summary plot for oscillators 1, 10, and 20 showing raw vs. corrected energy and the exponential fit."
+            ],
+            "sub_task": "Data processing, noise floor characterization, and energy bias correction.",
+            "sub_task_agent": "engineer"
+        },
+        {
+            "bullet_points": [
+                "Compute the mean and standard deviation of the residuals between the observed damping rate ($\\gamma_{obs}$) and the theoretical damping rate ($\\gamma_{theory} = b / 2m$).",
+                "Perform numerical integration (trapezoidal rule) of the corrected energy trajectories over the 0–20s window.",
+                "Aggregate all validation metrics (including SNR and residuals) and save them to a structured file for the researcher.",
+                "Generate a summary plot comparing $\\gamma_{obs}$ vs $\\gamma_{theory}$ across all 20 oscillators.",
+                "Generate a diagnostic histogram plot visualizing the distribution of residuals between $\\gamma_{obs}$ and $\\gamma_{theory}$."
+            ],
+            "sub_task": "Statistical aggregation and validation of dissipation rates.",
+            "sub_task_agent": "engineer"
+        },
+        {
+            "bullet_points": [
+                "Interpret the effectiveness of the noise-floor characterization in recovering the physical dissipation rates.",
+                "Discuss the impact of the energy bias correction on the late-time energy residuals, explicitly referencing the SNR metrics calculated in Step 1.",
+                "Synthesize the quantitative results (residuals, SNR, and dissipation rate validation) into a formal Results section.",
+                "Provide a final assessment of the framework's robustness in distinguishing physical damping from measurement noise, referencing the diagnostic plots and residual distributions generated in Step 2."
+            ],
+            "sub_task": "Final analysis and reporting of the deconvolution framework.",
+            "sub_task_agent": "researcher"
+        }
+    ]
+}

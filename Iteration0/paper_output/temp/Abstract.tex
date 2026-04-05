@@ -1,0 +1,14 @@
+\documentclass[]{article}
+
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{natbib}
+\usepackage{graphicx} 
+
+
+\begin{document}
+
+Measurement noise in physical systems often creates an artificial, non-zero energy floor, which obscures the true energy dissipation dynamics and biases the estimation of physical parameters like damping rates. This study develops and validates an analytical deconvolution framework to isolate and remove this noise-induced bias from the energy decay trajectories of damped harmonic oscillators. Using a dataset of 20 simulated oscillators, we characterize the noise floor by calculating the variance of displacement and velocity signals during the late-time decay phase (t > 15s), where physical motion is negligible. These variances are used to compute a constant energy bias term, which is then subtracted from the total measured energy to produce a corrected trajectory. Validation via non-linear least-squares fitting demonstrates that the corrected energy trajectories yield observed damping rates that are in excellent agreement with theoretical values, with a mean residual of only $0.0082 \text{ rad/s}$. The framework successfully eliminates the artificial energy plateau, enabling the accurate recovery of underlying dissipation rates, particularly in systems with low signal-to-noise ratios, and provides a robust diagnostic for distinguishing measurement artifacts from true physical behavior.
+
+\end{document}
+                

@@ -1,0 +1,61 @@
+\documentclass[]{article}
+
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{natbib}
+\usepackage{graphicx} 
+
+
+\begin{document}
+
+\subsection{Noise floor characterization and energy correction}
+
+The application of our deconvolution framework begins with the characterization of the noise-induced energy bias. In the raw data, the total measured energy, $E_{total}(t)$, for each oscillator fails to decay to zero, instead settling at a constant positive value, or "noise floor," at late times. This behavior is a direct consequence of measurement noise, where the variance of the zero-mean noise in displacement and velocity signals contributes a positive offset to the calculated energy.
+
+Figure \ref{fig:image0} illustrates this phenomenon for three representative oscillators. The blue curves show the raw energy trajectories, which clearly plateau after approximately 10 seconds. By isolating the signals in the late-time regime ($t > 15$ s), where physical motion is assumed to be negligible, we computed the variances of the displacement ($\sigma_x^2$) and velocity ($\sigma_v^2$) signals. These variances were then used to calculate the constant energy bias, $\Delta E_{\text{noise}}$, for each oscillator according to Equation (1).
+
+The impact of this bias is most significant in systems with a low Signal-to-Noise Ratio (SNR), defined here as the ratio of the initial energy $E(0)$ to the noise-induced bias $\Delta E_{\text{noise}}$. For instance, Oscillator 3 (SNR $\approx 2.11$) and Oscillator 19 (SNR $\approx 2.32$) exhibited pronounced noise floors that obscured a large portion of the physical decay. In contrast, high-SNR systems like Oscillator 11 (SNR $\approx 2616.0$) were minimally affected.
+
+Subtracting the calculated bias $\Delta E_{\text{noise}}$ from the raw energy yields the corrected energy trajectory, $E_{corrected}(t)$, shown in red in Figure \ref{fig:image0}. The correction successfully removes the artificial energy floor, revealing an energy decay that follows the expected exponential trend down to zero. This restored trajectory provides a clean signal for accurately modeling the system's physical dissipation.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../input_files/plots/step_1_energy_correction_summary_1775399991.png}
+    \caption{Diagnostic plots comparing the raw measured energy (blue) and the corrected energy (red) for Oscillators 1, 10, and 20. The raw energy signal exhibits a persistent plateau at late times due to a noise-induced bias. This noise floor is effectively eliminated by the deconvolution framework, resulting in corrected energy trajectories that show a clean exponential decay toward zero, consistent with the theoretical model of a damped system.}
+    \label{fig:image0}
+\end{figure*}
+
+\subsection{Recovery of physical damping rates}
+
+To validate the deconvolution framework, we assessed its ability to recover the true physical damping rate, $\gamma_{theory}$, from the corrected energy data. For each of the 20 oscillators, an observed damping rate, $\gamma_{obs}$, was determined by performing a non-linear least-squares fit of the corrected energy trajectory, $E_{corrected}(t)$, to the exponential decay model given in Equation (3).
+
+The results of this validation are summarized in Figure \ref{fig:image1}. The left panel shows a strong linear correlation between the observed damping rates and their theoretical counterparts. The data points cluster tightly around the identity line ($\gamma_{obs} = \gamma_{theory}$), indicating that the correction method leads to highly accurate parameter estimates across the entire range of damping rates present in the dataset.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../input_files/plots/step_2_validation_plots_1775400009.png}
+    \caption{Validation of the noise deconvolution framework for 20 oscillators. (Left) The observed damping rate ($\gamma_{obs}$), derived from noise-corrected energy data, is plotted against the theoretical damping rate ($\gamma_{theory}$). The data points show a strong linear correlation, clustering around the ideal identity line (dashed). (Right) A histogram of the residuals ($\gamma_{obs} - \gamma_{theory}$) shows a distribution centered near zero, indicating that the deconvolution method successfully removes systematic bias in the damping rate estimation.}
+    \label{fig:image1}
+\end{figure*}
+
+A quantitative analysis of the residuals, $\Delta\gamma = \gamma_{obs} - \gamma_{theory}$, further confirms the method's efficacy. The distribution of these residuals, shown in the right panel of Figure \ref{fig:image1}, is approximately symmetric and centered close to zero. This demonstrates that our deconvolution framework successfully eliminates the systematic bias that would otherwise arise from fitting a model to the noise-floored energy data.
+
+The aggregated statistics for the residuals across all 20 oscillators are presented in Table \ref{tab:residuals}. The mean residual is $0.0082 \text{ rad/s}$, a value very close to zero, confirming the lack of significant systematic error. The standard deviation of the residuals is $0.0197 \text{ rad/s}$, indicating a high degree of precision in the recovered damping rates. The small positive mean residual may suggest a slight tendency to overestimate the damping rate, which could be an artifact of the fitting procedure's sensitivity to the clipping of corrected energy values to zero at late times.
+
+\begin{table}[h!]
+    \centering
+    \caption{Statistical summary of the residuals ($\Delta\gamma = \gamma_{obs} - \gamma_{theory}$) for the estimated damping rates across all 20 oscillators.}
+    \label{tab:residuals}
+    \begin{tabular}{lc}
+        \hline
+        \hline
+        Metric & Value (rad/s) \\
+        \hline
+        Mean Residual & $0.0082$ \\
+        Standard Deviation of Residuals & $0.0197$ \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\end{document}
+                

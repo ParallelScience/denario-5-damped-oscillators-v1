@@ -1,0 +1,12 @@
+{
+  "image0": {
+    "key": "image0",
+    "name": "step_1_energy_correction_summary_1775399991.png",
+    "caption": "Diagnostic plots comparing the raw measured energy (blue) and the corrected energy (red) for Oscillators 1, 10, and 20. The raw energy signal exhibits a persistent plateau at late times due to a noise-induced bias. This noise floor is effectively eliminated by the deconvolution framework, resulting in corrected energy trajectories that show a clean exponential decay toward zero, consistent with the theoretical model of a damped system."
+  },
+  "image1": {
+    "key": "image1",
+    "name": "step_2_validation_plots_1775400009.png",
+    "caption": "Validation of the noise deconvolution framework for 20 oscillators. (Left) The observed damping rate ($\\gamma_{obs}$), derived from noise-corrected energy data, is plotted against the theoretical damping rate ($\\gamma_{theory}$). The data points show a strong linear correlation, clustering around the ideal identity line (dashed). (Right) A histogram of the residuals ($\\gamma_{obs} - \\gamma_{theory}$) shows a distribution centered near zero, indicating that the deconvolution method successfully removes systematic bias in the damping rate estimation."
+  }
+}
